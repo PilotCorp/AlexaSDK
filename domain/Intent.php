@@ -16,7 +16,10 @@
             $intentName = $this->Name;
             $intent = new $intentName();
             foreach (get_object_vars($this) as $key => $val) {
-                $intent->$key = $val;
+                if (property_exists($val, 'value'))
+                    $intent->$key = $val->value;
+                else
+                    $intent->$key = $val;
             }
             return $intent->Run();
         }
