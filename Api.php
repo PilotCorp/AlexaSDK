@@ -11,11 +11,18 @@
             include 'app/' . $class_name . '.php';
         }
     });
+    $before = get_declared_classes();
+    foreach (glob("app/*.php") as $filename)
+    {
+        include $filename;
+    }
+    $after = get_declared_classes();
+    $appClasses = array_diff($after, $before);
 
     if( count(debug_backtrace()) == 0 ) 
         $json = file_get_contents('php://input');
     $request = new RequestEnvelope();
     $request = Utils::json_decode_full($json, $request);
-    $handler = new Handler($request);
+    $handler = new Handler($request, $appClasses);
     $handler->Run();
 ?>

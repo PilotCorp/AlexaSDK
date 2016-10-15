@@ -2,14 +2,24 @@
 
     class Handler {
         private $request;
+        private $appClasses;
 
-        function __construct($request) {
+        function __construct($request, $appClasses) {
             $this->request = $request;
+            $this->appClasses = $appClasses;
         }
 
         public function Run() {
+            $handler = $this;
+            foreach ($this->appClasses as $appClass) {
+                $rc = new ReflectionClass($appClass);
+                $pc = $rc->getParentClass();
+                if ($pc && $pc->name == "Handler") {
+                    $handler = new $appClass($this->request, null);
+                }
+            } 
             $requestType = $this->request->Request->Type;
-            $response = $this->$requestType();
+            $response = $handler->$requestType();
             if (!$response) {
                 (new ResponseEnvelope())->ToOutput();
             } elseif ($response instanceof ResponseEnvelope) {
