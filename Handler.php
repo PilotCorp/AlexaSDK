@@ -34,7 +34,7 @@
         }
 
         public function IntentRequest () {
-            return $this->request->Request->Intent->Run();
+            return $this->request->Request->Intent->Run($this->request);
         }
 
         public function SessionEndedRequest () {
