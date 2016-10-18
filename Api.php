@@ -19,8 +19,10 @@
     $after = get_declared_classes();
     $appClasses = array_diff($after, $before);
 
-    if( count(debug_backtrace()) == 0 ) 
+    if( count(debug_backtrace()) == 0 ) {
         $json = file_get_contents('php://input');
+        file_put_contents('/var/www/html/input.log', $json . PHP_EOL, FILE_APPEND);
+    }
     $request = new RequestEnvelope();
     $request = Utils::json_decode_full($json, $request);
     $handler = new Handler($request, $appClasses);
