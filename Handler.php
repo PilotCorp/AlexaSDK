@@ -19,13 +19,17 @@
                 }
             } 
             $requestType = $this->request->Request->Type;
-            $response = $handler->$requestType();
-            if (!$response) {
-                (new ResponseEnvelope())->ToOutput();
-            } elseif ($response instanceof ResponseEnvelope) {
-                $response->ToOutput();
-            } elseif (is_string($response)) {
-                (new ResponseEnvelope($response))->ToOutput();
+            try {
+                $response = $handler->$requestType();
+                if (!$response) {
+                    (new ResponseEnvelope())->ToOutput();
+                } elseif ($response instanceof ResponseEnvelope) {
+                    $response->ToOutput();
+                } elseif (is_string($response)) {
+                    (new ResponseEnvelope($response))->ToOutput();
+                }
+            } catch (Exception $e) {
+                (new ResponseEnvelope($e->getMessage()))->ToOutput();
             }
         }
 
