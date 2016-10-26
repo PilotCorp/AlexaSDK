@@ -20,6 +20,8 @@
             } 
             $requestType = $this->request->Request->Type;
             try {
+                if (!isset($requestType))
+                    throw new Exception('Malformed Input');
                 $response = $handler->$requestType();
                 if (!$response) {
                     (new ResponseEnvelope())->ToOutput();
