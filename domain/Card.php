@@ -4,7 +4,7 @@
         public $Title;
         public $Content;
 
-        function __construct(string $content, string $type = 'Simple', string $title = null) {
+        function __construct($content, $type = 'Simple', $title = null) {
             $this->Content = $content;
             $this->Type = $type;
             $this->Title = $title;

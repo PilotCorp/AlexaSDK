@@ -3,7 +3,7 @@
         public $Type;
         public $Text;
 
-        function __construct(string $text, string $type = 'PlainText') {
+        function __construct($text, $type = 'PlainText') {
             $this->Text = $text;
             $this->Type = $type;
         }

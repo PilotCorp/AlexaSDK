@@ -22,7 +22,7 @@
             return $arr;
         }
 
-        public static function json_decode_full(string $json, $obj) {
+        public static function json_decode_full($json, $obj) {
             $stdObj = json_decode($json);
             if ($stdObj)
                 Utils::pick_and_place($obj, $stdObj);
