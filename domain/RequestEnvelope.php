@@ -29,6 +29,12 @@ class RequestEnvelope
      * @var Request 
      */
     public $Request;
+
+    public function getApplicationId() {
+        if (isset($this->Session->Application->ApplicationId))
+            return $this->Session->Application->ApplicationId;
+        return null;
+    }
 }
 
 ?>
